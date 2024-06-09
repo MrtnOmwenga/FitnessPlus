@@ -7,4 +7,8 @@ export default () => ({
     password: process.env.SUPABASE_PASSWORD,
     database: process.env.SUPABASE_DATABASE,
   },
+  email: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
 });
