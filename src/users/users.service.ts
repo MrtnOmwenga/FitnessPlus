@@ -44,8 +44,6 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    console.log(updateUserDto.monthlyAmount);
-
     await this.usersRepository.update(id, updateUserDto);
     return this.usersRepository.findOne({ where: {id} });
   }

@@ -34,7 +34,7 @@ describe('AppController (e2e)', () => {
       .expect('Hello World!');
   });
 
-  it('/users/:id (GET)', async () => {
+  it('/api/users/:id (GET)', async () => {
     const createUserDto = {
       firstName: 'Test',
       lastName: 'User',
@@ -46,25 +46,25 @@ describe('AppController (e2e)', () => {
     };
 
     const createUserResponse = await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(201);
 
     const userId = createUserResponse.body.id;
 
-    const findUserResponse = await request(app.getHttpServer()).get(`/users/${userId}`);
+    const findUserResponse = await request(app.getHttpServer()).get(`/api/users/${userId}`);
     expect(findUserResponse.status).toBe(200);
     expect(findUserResponse.body.firstName).toEqual(createUserDto.firstName);
     expect(findUserResponse.body.lastName).toEqual(createUserDto.lastName);
   });
 
-  it('/users (GET)', async () => {
-    const response = await request(app.getHttpServer()).get('/users').expect(200);
+  it('/api/users (GET)', async () => {
+    const response = await request(app.getHttpServer()).get('/api/users').expect(200);
 
     expect(response.body).toHaveLength(1);
   });
 
-  it('/users (POST)', async () => {
+  it('/api/users (POST)', async () => {
     const createUserDto = {
       firstName: 'Mark',
       lastName: 'Twain',
@@ -77,7 +77,7 @@ describe('AppController (e2e)', () => {
     };
 
     const response = await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(201);
     
@@ -97,7 +97,7 @@ describe('AppController (e2e)', () => {
     };
     
     const response = await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(201);
     
@@ -115,8 +115,8 @@ describe('AppController (e2e)', () => {
       email: 'mark@example.com',
     };
 
-    const response = await request(app.getHttpServer())
-      .post('/users')
+    await request(app.getHttpServer())
+      .post('/api/users')
       .send(createUserDto)
       .expect(400);
   });
@@ -131,7 +131,7 @@ describe('AppController (e2e)', () => {
     };
 
     await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(400);
   });
@@ -147,7 +147,7 @@ describe('AppController (e2e)', () => {
     };
 
     await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(400);
   });
@@ -168,21 +168,21 @@ describe('AppController (e2e)', () => {
     };
 
     const createUserResponse = await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(201);
 
     const userId = createUserResponse.body.id;
 
     const updateResponse = await request(app.getHttpServer())
-      .put(`/users/${userId}`)
+      .put(`/api/users/${userId}`)
       .send(updateUserDto)
       .expect(200);
     
     expect(updateResponse.body.lastName).toEqual(updateUserDto.lastName);
   });
 
-  it('/users/:id (PUT)', async () => {
+  it('/api/users/:id (PUT)', async () => {
     const updateUserDto = {
       monthlyAmount: -100,
     };
@@ -198,19 +198,19 @@ describe('AppController (e2e)', () => {
     };
 
     const createUserResponse = await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(201);
 
     const userId = createUserResponse.body.id;
 
     await request(app.getHttpServer())
-      .put(`/users/${userId}`)
+      .put(`/api/users/${userId}`)
       .send(updateUserDto)
       .expect(400);
   });
 
-  it('/users/:id (DELETE)', async () => {
+  it('/api/users/:id (DELETE)', async () => {
     const createUserDto = {
       firstName: 'Tom',
       lastName: 'Hardy',
@@ -222,17 +222,17 @@ describe('AppController (e2e)', () => {
     };
 
     const createUserResponse = await request(app.getHttpServer())
-      .post('/users')
+      .post('/api/users')
       .send(createUserDto)
       .expect(201);
 
     const userId = createUserResponse.body.id;
 
     await request(app.getHttpServer())
-      .delete(`/users/${userId}`)
+      .delete(`/api/users/${userId}`)
       .expect(204);
 
-    const findUserResponse = await request(app.getHttpServer()).get(`/users/${userId}`);
+    const findUserResponse = await request(app.getHttpServer()).get(`/api/users/${userId}`);
     expect(findUserResponse.status).toBe(404);
   });
 });
