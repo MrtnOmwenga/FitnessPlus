@@ -10,5 +10,7 @@ export default () => ({
   email: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
+    smtpHost: process.env.EMAIL_SMTP_HOST,
+    smtpPort: parseInt(process.env.EMAIL_SMTP_PORT, 10) || 465,
   },
 });
