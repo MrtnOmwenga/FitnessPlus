@@ -14,13 +14,24 @@ export class UsersCronService {
   async handleCron() {
     const users = await this.usersService.findDueUsers();
 
-    users.forEach(async (user) => {
+    for (const user of users) {
+      let subject: string;
+      let html: string;
+
       if (user.isFirstMonth) {
         const combinedFee = +user.totalAmount + (+user.monthlyAmount || 0);
-        await this.mailerService.sendMail(user.email, 'Combined fee for the first month', `Your combined fee for the first month is ${combinedFee}`);
+        subject = 'Combined fee for the first month';
+        html = this.mailerService.generateEmailContent(user, combinedFee);
       } else {
-        await this.mailerService.sendMail(user.email, 'Monthly add-on service reminder', `Your monthly add-on service fee is ${user.monthlyAmount}`);
+        subject = 'Monthly add-on service reminder';
+        html = this.mailerService.generateEmailContent(user, user.monthlyAmount);
       }
-    });
+
+      try {
+        await this.mailerService.sendMail(user.email, subject, html);
+      } catch (error) {
+        console.error('Error occurred while sending email:', error);
+      }
+    }
   }
 }

@@ -94,12 +94,12 @@ describe('UsersCronService (Integration)', () => {
     expect(sendMailSpy).toHaveBeenCalledWith(
       'martin36449@gmail.com',
       'Combined fee for the first month',
-      expect.stringContaining('Your combined fee for the first month is 250')
+      expect.stringContaining('Subscription Reminder')
     );
     expect(sendMailSpy).toHaveBeenCalledWith(
       'mrtnomar15@gmail.com',
       'Monthly add-on service reminder',
-      expect.stringContaining('Your monthly add-on service fee is 50')
+      expect.stringContaining('Subscription Reminder')
     );
   });
 });
